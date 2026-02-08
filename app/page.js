@@ -73,20 +73,56 @@ export default function App() {
   }, [locationPermissionAsked]);
 
   // Request location
-  const requestLocation = () => {
+  const requestLocation = useCallback(() => {
+    setLocation('Detecting...');
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
-          // For MVP, just show coordinates as location
-          setLocation(`${latitude.toFixed(2)}, ${longitude.toFixed(2)}`);
-          toast.success('Location detected!');
+          try {
+            // Use free reverse geocoding API to get location name
+            const response = await fetch(
+              `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10`
+            );
+            const data = await response.json();
+            if (data && data.address) {
+              const city = data.address.city || data.address.town || data.address.village || data.address.suburb || data.address.county || '';
+              const state = data.address.state || '';
+              const locationName = city ? `${city}${state ? ', ' + state : ''}` : `${latitude.toFixed(2)}, ${longitude.toFixed(2)}`;
+              setLocation(locationName);
+              toast.success(`Location: ${locationName}`);
+            } else {
+              setLocation(`${latitude.toFixed(2)}, ${longitude.toFixed(2)}`);
+            }
+          } catch (e) {
+            console.log('Geocoding error:', e);
+            setLocation(`${latitude.toFixed(2)}, ${longitude.toFixed(2)}`);
+          }
         },
         (error) => {
           console.log('Location error:', error);
-          setLocation('Location not available');
+          // Fallback: Try IP-based location
+          fetchIPLocation();
         }
       );
+    } else {
+      fetchIPLocation();
+    }
+  }, []);
+
+  // IP-based location fallback
+  const fetchIPLocation = async () => {
+    try {
+      const response = await fetch('https://ipapi.co/json/');
+      const data = await response.json();
+      if (data && data.city) {
+        const locationName = `${data.city}${data.region ? ', ' + data.region : ''}`;
+        setLocation(locationName);
+      } else {
+        setLocation('Location not available');
+      }
+    } catch (e) {
+      setLocation('Location not available');
     }
   };
 
