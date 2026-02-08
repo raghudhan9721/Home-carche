@@ -1,0 +1,131 @@
+// Partner Card Styles
+.partner-card {
+  overflow: hidden;
+  background: white;
+  border-radius: 0.75rem;
+  border: none;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  }
+
+  &__image-wrapper {
+    position: relative;
+    height: 8rem;
+    background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__placeholder-icon {
+    width: 4rem;
+    height: 4rem;
+    color: #60a5fa;
+  }
+
+  &__verified-badge {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: #22c55e;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  &__content {
+    padding: 1.25rem;
+  }
+
+  &__name {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 0.5rem;
+  }
+
+  &__services {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  &__service-badge {
+    background: #f3f4f6;
+    color: #374151;
+    padding: 0.125rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+
+  &__detail-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &--rating {
+      .partner-card__detail-icon {
+        color: #eab308;
+        fill: #eab308;
+      }
+    }
+
+    &--price {
+      color: #16a34a;
+      font-weight: 600;
+
+      .partner-card__detail-icon {
+        color: #16a34a;
+      }
+    }
+  }
+
+  &__detail-icon {
+    width: 1rem;
+    height: 1rem;
+    color: #9ca3af;
+  }
+
+  &__book-button {
+    width: 100%;
+    margin-top: 1rem;
+    background: #2563eb;
+    color: white;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #1d4ed8;
+    }
+  }
+}
